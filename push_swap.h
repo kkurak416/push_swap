@@ -21,7 +21,12 @@ typedef struct s_node
     struct s_node   *next;
     struct s_node   *prev;
 } t_node;
-
+//struktura do quick_sort
+typedef struct s_node {
+    int low;
+    int high;
+    struct s_node *next;
+} t_node;
 //struktura stosu
 typedef struct s_stack
 {

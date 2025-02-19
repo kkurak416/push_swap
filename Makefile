@@ -6,7 +6,7 @@
 #    By: kkurowsk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/13 15:39:28 by kkurowsk          #+#    #+#              #
-#    Updated: 2025/02/13 15:50:11 by kkurowsk         ###   ########.fr        #
+#    Updated: 2025/02/19 10:19:41 by kkurowsk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ HEADER = push_swap.h
 
 NAME = pushswap.a
 
-SRC = //pliki .c
+SRC = push_swap.c utilis_p.c utilis_r.c utilis_rr.c utilis_s.c
 
 OBJS = $(SRC:.c=.o)
 
