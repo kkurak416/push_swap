@@ -12,9 +12,9 @@
 
 HEADER = push_swap.h
 
-NAME = pushswap.a
+NAME = push_swap
 
-SRC = push_swap.c utilis_p.c utilis_r.c utilis_rr.c utilis_s.c
+SRC = push_swap.c utilis_p.c utilis_r.c utilis_rr.c utilis_s.c normalize.c
 
 OBJS = $(SRC:.c=.o)
 
@@ -22,19 +22,18 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra -I$(LIB_PATH)
 
-LIB_PATH = libft
+LIB_PATH = ./libft
 
-all: $(LIBFT) $(NAME)
+all: $(LIB_PATH)/libft.a $(NAME)
 
 $(NAME): $(OBJS)
-	cp $(LIBFT) $(NAME)
-	ar -rcs $(NAME) $(OBJS)
+	$(CC) $(OBJS) -L$(LIB_PATH) -lft -o $(NAME)
 
-$(LIBFT):
+$(LIB_PATH)/libft.a:
 	make -C $(LIB_PATH) all
 
 %.o: %.c $(HEADER)
-	$(CC) -c $(CFLAGS) -I./ &< -o $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 fclean: clean
 	make -C $(LIB_PATH) fclean
@@ -42,8 +41,9 @@ fclean: clean
 
 clean:
 	rm -f $(OBJS)
-	make -C$(LIB_PATH) clean
+	make -C $(LIB_PATH) clean
 
 re: fclean all
 
 .PHONY: all clean fclean re
+

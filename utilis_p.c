@@ -16,7 +16,7 @@ int pa(t_stack *stack_a, t_stack *stack_b)
 {
 	t_node	*temp;
 
-	if (is_stack_valid(stack_b))
+	if (is_valid_stack(stack_b))
 	{
 		temp = stack_b->top;
 		stack_b->top = stack_b->top->next;
@@ -31,7 +31,7 @@ int pb(t_stack *stack_a, t_stack *stack_b)
 {
 	t_node	*temp;
 
-	if(is_stack_valid(stack_a))
+	if(is_valid_stack(stack_a))
 	{
 		temp = stack_a->top;
 		stack_a->top = stack_a->top->next;

@@ -27,11 +27,12 @@ int	size_of_stack(t_stack *stack)
 	return (i);
 }
 
-void partition (int *array, int low, int high)
+int	partition (int *array, int low, int high)
 {
 	int	i;
 	int	j;
-	int pivot;
+	int	pivot;
+	int	temp;
 
 	pivot = array[high];
 	i = low - 1;
@@ -56,14 +57,14 @@ void partition (int *array, int low, int high)
 void quick_sort(int *array, int low, int high)
 {
 	int	pi;
-	t_stack	*stack;
-	t_node	*temp;
+	t_quick_node	*stack;
+	t_quick_node	*temp;
 
 	stack = NULL;
 	if (low < high)
 	{
 		pi = partition(array, low, high);
-		temp = malloc(sizeof(t_node));
+		temp = malloc(sizeof(t_quick_node));
 		if (!temp)
 			return ;
 		temp->low = low;
@@ -77,33 +78,40 @@ void quick_sort(int *array, int low, int high)
 	}
 }
 
+void	fill_values(int *values, t_stack *stack)
+{
+	t_node	*current;
+	int		idx;
+
+	current = stack->top;
+	idx = 0;
+	while (current)
+	{
+		values[idx++] = current->value;
+		current = current->next;
+	}
+}
+
 void normalize_stack(t_stack *stack)
 {
-	int	i;
+	t_node	*current;
 	int	*values;
 	int	size;
-	t_node	*temp;
-	t_node	current;
+	int	idx;
 
-	i = 0;
 	size = size_of_stack(stack);
-	values = malloc(sizeof(int) *size_of_stack(stack));
+	values = malloc(sizeof(int) *size);
 	if(!values)
 		return ;
-	temp = stack->top;
-	while (temp != NULL)
-	{
-		values[i++] = temp->value;
-		temp = temp->next;
-	}
+	fill_values(values, stack);
 	quick_sort(values, 0, size - 1);
 	current = stack->top;
-	while (current != NULL)
+	while (current)
 	{
-		i = 0;
-		while (values[i] != current->value)
-			i++;
-		current->value = i;
+		idx = 0;
+		while(values[idx] != current->value)
+			idx++;
+		current->value = idx;
 		current = current->next;
 	}
 	free(values);

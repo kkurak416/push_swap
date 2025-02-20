@@ -6,7 +6,7 @@
 /*   By: kkurowsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 15:32:12 by kkurowsk          #+#    #+#             */
-/*   Updated: 2025/02/18 17:32:46 by kkurowsk         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:06:11 by kkurowsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
+# include <stdio.h>
 // struktura listy
 typedef struct s_node
 {
@@ -22,17 +23,17 @@ typedef struct s_node
     struct s_node   *prev;
 } t_node;
 //struktura do quick_sort
-typedef struct s_node {
+typedef struct s_quick_node {
     int low;
     int high;
-    struct s_node *next;
-} t_node;
+    struct s_quick_node *next;
+} t_quick_node;
 //struktura stosu
 typedef struct s_stack
 {
-    t_node  *top;
+	t_node  *top;
 	t_node  *bottom;
-    int     size;
+	int     size;
 } t_stack;
 
 int	is_valid_stack(t_stack *stack);
@@ -44,5 +45,10 @@ int	pb(t_stack *stack_a, t_stack *stack_b);
 int	rra(t_stack *stack_a);
 int	rrb(t_stack *stack_b);
 int	rrr(t_stack *stack_a, t_stack *stack_b);
+int	size_of_stack(t_stack *stack);
+int	partition (int *array, int low, int high);
+void	quick_sort(int *array, int low, int high);
+void	fill_values(int *values, t_stack *stack);
+void	normalize_stack(t_stack *stack);
 
 #endif

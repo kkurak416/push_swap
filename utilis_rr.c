@@ -16,7 +16,7 @@ int rra(t_stack *stack_a)
 {
 	t_node	*last;
 
-	if (is_stack_valid(stack_a))
+	if (is_valid_stack(stack_a))
 	{
 		last = stack_a->top;
 		while (last->next != NULL)
@@ -34,7 +34,7 @@ int rrb(t_stack *stack_b)
 {
 	t_node	*last;
 
-	if(is_stack_valid(stack_b))
+	if(is_valid_stack(stack_b))
 	{
 		last = stack_b->top;
 		while (last->next != NULL)
@@ -50,7 +50,7 @@ int rrb(t_stack *stack_b)
 
 int rrr(t_stack *stack_a, t_stack *stack_b)
 {
-	if (is_stack_valid(stack_a) && is_stack_valid(stack_b))
+	if (is_valid_stack(stack_a) && is_valid_stack(stack_b))
 	{
 		rra(stack_a);
 		rrb(stack_b);
