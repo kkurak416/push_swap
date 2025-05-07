@@ -5,45 +5,37 @@
 #                                                     +:+ +:+         +:+      #
 #    By: kkurowsk <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/13 15:39:28 by kkurowsk          #+#    #+#              #
-#    Updated: 2025/02/19 10:19:41 by kkurowsk         ###   ########.fr        #
+#    Created: 2025/04/29 12:30:38 by kkurowsk          #+#    #+#              #
+#    Updated: 2025/05/06 17:56:47 by kkurowsk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-HEADER = push_swap.h
-
 NAME = push_swap
 
-SRC = push_swap.c utilis_p.c utilis_r.c utilis_rr.c utilis_s.c normalize.c
-
-OBJS = $(SRC:.c=.o)
-
 CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
+LIBFT = ../libft/libft.a
 
-CFLAGS = -Wall -Werror -Wextra -I$(LIB_PATH)
+SRCS = args.c main.c operations.c sort.c sort_utils.c support.c utils.c utils2.c utils3.c
+OBJS = $(SRCS:.c=.o)
 
-LIB_PATH = ./libft
-
-all: $(LIB_PATH)/libft.a $(NAME)
+all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -L$(LIB_PATH) -lft -o $(NAME)
+	@make -C ../libft
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-$(LIB_PATH)/libft.a:
-	make -C $(LIB_PATH) all
-
-%.o: %.c $(HEADER)
-	$(CC) -c $(CFLAGS) $< -o $@
-
-fclean: clean
-	make -C $(LIB_PATH) fclean
-	rm -rf $(NAME)
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
+	@make clean -C ../libft
 	rm -f $(OBJS)
-	make -C $(LIB_PATH) clean
+
+fclean: clean
+	@make fclean -C ../libft
+	rm -f $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
-

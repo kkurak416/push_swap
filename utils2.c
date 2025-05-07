@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkurowsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/21 14:01:27 by kkurowsk          #+#    #+#             */
-/*   Updated: 2024/12/21 14:04:36 by kkurowsk         ###   ########.fr       */
+/*   Created: 2025/04/29 12:14:45 by kkurowsk          #+#    #+#             */
+/*   Updated: 2025/04/29 12:17:08 by kkurowsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
-int	ft_lstsize(t_list *lst)
+void	ra(t_stack *a)
 {
-	int	counter;
-
-	counter = 0;
-	while (lst != NULL)
+	if (a->size >= 2)
 	{
-		++counter;
-		lst = lst->next;
+		rotate(a);
+		write(1, "ra\n", 3);
 	}
-	return (counter);
+}
+
+void	rb(t_stack *b)
+{
+	if (b->size >= 2)
+	{
+		rotate(b);
+		write(1, "rb\n", 3);
+	}
+}
+
+void	rr(t_stack *a, t_stack *b)
+{
+	if (a->size >= 2 && b->size >= 2)
+	{
+		rotate(a);
+		rotate(b);
+		write(1, "rr\n", 3);
+	}
 }

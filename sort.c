@@ -5,93 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kkurowsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 18:37:47 by kkurowsk          #+#    #+#             */
-/*   Updated: 2025/02/20 19:32:07 by kkurowsk         ###   ########.fr       */
+/*   Created: 2025/04/29 12:25:26 by kkurowsk          #+#    #+#             */
+/*   Updated: 2025/04/29 12:25:28 by kkurowsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int find_max(int *values, int size, int idx, int max)
+void	sort_3(t_stack *a)
 {
-    if (idx == size)
-        return max;
-    if (values[idx] > max)
-        max = values[idx];
-    return find_max(values, size, idx + 1, max);
+	int	first;
+	int	second;
+	int	third;
+
+	first = a->top->value;
+	second = a->top->next->value;
+	third = a->top->next->next->value;
+	if (first > second && second < third && first < third)
+		sa(a);
+	else if (first > second && second > third)
+	{
+		sa(a);
+		rra(a);
+	}
+	else if (first > second && second < third && first > third)
+		ra(a);
+	else if (first < second && second > third && first < third)
+	{
+		sa(a);
+		ra(a);
+	}
+	else if (first < second && second > third && first > third)
+		rra(a);
 }
 
-int get_max_bits(t_stack *stack)
+void	sort_4_5(t_stack *a, t_stack *b)
 {
-    t_node *current = stack->top;
-    int *values;
-    int size = size_of_stack(stack);
-    int max;
-    int bits = 0;
+	int	min;
+	int	i;
+	int	size;
 
-    values = malloc(sizeof(int) * size);
-    if (!values)
-        return (0);
-
-    int idx = 0;
-    while (current)
-    {
-        values[idx++] = current->value;
-        current = current->next;
-    }
-
-    max = find_max(values, size, 0, values[0]);
-
-    while (max >> bits)
-        bits++;
-
-    free(values);
-    return bits;
+	size = a->size;
+	i = 0;
+	while (i++ < size - 3)
+	{
+		min = get_min(a);
+		while (a->top->value != min)
+		{
+			if (find_position(a, min) <= a->size / 2)
+				ra(a);
+			else
+				rra(a);
+		}
+		pb(a, b);
+	}
+	sort_3(a);
+	while (b->size > 0)
+		pa(a, b);
 }
 
-void radix_sort(t_stack *stack_a, t_stack *stack_b, int bit)
+void	radix_sort(t_stack *a, t_stack *b)
 {
-    int size = size_of_stack(stack_a);
+	int	max_num;
+	int	max_bits;
+	int	i;
+	int	j;
+	int	size;
 
-    if (bit >= get_max_bits(stack_a)) // Zatrzymujemy się, jeśli osiągniemy koniec bitów
-        return;
-
-    // Przetwarzamy każdy element w zależności od bitu
-    t_node *current = stack_a->top;
-    while (current)
-    {
-        if ((current->value >> bit) & 1)
-            pa(stack_a, stack_b);  // Przenieś na stack_b, jeśli bit jest ustawiony na 1
-        else
-            rra(stack_a);  // Wróć na dół stack_a, jeśli bit jest ustawiony na 0
-        current = current->next;
-    }
-
-    // Zwracamy wszystkie elementy z stack_b z powrotem do stack_a
-    move_back_to_stack_a(stack_a, stack_b);
-
-    // Rekurencyjne przejście do następnego bitu
-    radix_sort(stack_a, stack_b, bit + 1);
-}
-
-// Funkcja pomocnicza do przenoszenia elementów z stack_b z powrotem do stack_a
-void move_back_to_stack_a(t_stack *stack_a, t_stack *stack_b)
-{
-    while (stack_b->top != NULL)
-        pb(stack_a, stack_b);
-}
-
-int size_of_stack(t_stack *stack)
-{
-    t_node *temp;
-    int i;
-
-    i = 0;
-    temp = stack->top;
-    while (temp != NULL)
-    {
-        temp = temp->next;
-        i++;
-    }
-    return (i);
+	max_num = a->size - 1;
+	max_bits = 0;
+	while ((max_num >> max_bits) != 0)
+		max_bits++;
+	i = -1;
+	while (++i < max_bits)
+	{
+		j = -1;
+		size = a->size;
+		while (++j < size)
+		{
+			if (((a->top->index >> i) & 1) == 1)
+				ra(a);
+			else
+				pb(a, b);
+		}
+		while (b->size > 0)
+			pa(a, b);
+	}
 }
